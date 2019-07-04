@@ -13,7 +13,7 @@ class FabCar extends Contract {
     }
 
     //Store subject attributes on the legder
-    async recordAttribute(ctx, attributeKey, attribute) {
+    async recordAttribute (ctx, attributeKey, attribute) {
 
         //The iterator will be used to get all attribute keys
         const iterator = await ctx.stub.getStateByRange("","");
@@ -42,9 +42,9 @@ class FabCar extends Contract {
 
 
     //Update and existing attribute
-    async UpdateAttribute(ctx, attributeKey, newAttributevalue){
+    async updateAttribute (ctx, attributeKey, newAttributevalue){
         console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(attributeKey, JSON.stringify(attribute));
+        await ctx.stub.putState(attributeKey, JSON.stringify(newAttributevalue));
         return "successfully submitted!";
     }
 
