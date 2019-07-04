@@ -9,38 +9,35 @@ const { Contract } = require('fabric-contract-api');
 class FabCar extends Contract {
     // Initialize ledger
     async initLedger(ctx) {
-        console.info('============= START : Initialize Ledger ===========');    
-
-        
-        console.info('============= END : Initialize Ledger ===========');
+        console.info('============= START : Initialize Ledger ===========');
     }
+
     //Store subject attributes on the legder
     async recordAttribute(ctx, attributeKey, attribute) {
-       
+
+        //The iterator will be used to get all attribute keys
         const iterator = await ctx.stub.getStateByRange("","");
-      const allKeys=[];
-        while (true) {
-            const res = await iterator.next();
+        let allKeys = new Set();
+        let res = await iterator.next();
 
-            if (res.value && res.value.value.toString()) {
-                const Key = res.value.key;
-                allKeys.push(Key);
+        while (!res.done) {
+        //while !res.done, we assume that there is res.value
+            if (res.value.value.toString()) {
+                const key = res.value.key;
+                allKeys.add(key);
             }
-            if (res.done) {
-                console.log('end of data');
-                await iterator.close();
-                break;
-            }
-        }
 
-        allKeys.forEach(element=> {if (element==attributeKey)
-        {throw new Error(`${attributeKey} is already exist you can update attribute using UpdateAttribute function`);
         }
-        });
+        console.log('end of data');
+        await iterator.close();
+
+        if (allKeys.has(attributeKey))  {
+            throw new Error(`${attributeKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
 
         console.info('============= START : Record attribute ===========');
-       await ctx.stub.putState(attributeKey, JSON.stringify(attribute));
-       return "successfully submitted!";
+        await ctx.stub.putState(attributeKey, JSON.stringify(attribute));
+        return "successfully submitted!";
     }
 
 
@@ -53,7 +50,7 @@ class FabCar extends Contract {
 
     //Query specific subject attribute based on subjectKey
     async QueryUserAttribute(ctx, key) {
-       
+
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length ===0){
             throw new Error(`${key} does not exist`);
@@ -62,15 +59,15 @@ class FabCar extends Contract {
         console.info ('this is attributeBytes:', attributeBytes);
         console.info('this is my attribute');
         return attribute;
-       
+
     }
 
     //Query all data
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange("","");
 
-      const allResults=[];
-      const allKeys=[];
+        const allResults=[];
+        const allKeys=[];
         while (true) {
             const res = await iterator.next();
 
@@ -95,9 +92,9 @@ class FabCar extends Contract {
                 console.info(allResults);
                 return JSON.stringify(allResults);
             }
-        }  
+        }
     }
-    
+
 
 }
 
