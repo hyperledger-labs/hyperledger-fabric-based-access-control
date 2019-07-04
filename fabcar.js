@@ -49,7 +49,7 @@ class FabCar extends Contract {
     }
 
     //Query specific subject attribute based on subjectKey
-    async QueryUserAttribute(ctx, key) {
+    async queryUserAttribute(ctx, key) {
 
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length ===0){
@@ -66,15 +66,14 @@ class FabCar extends Contract {
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange("","");
 
-        const allResults=[];
-        const allKeys=[];
+        const allResults = [];
         while (true) {
             const res = await iterator.next();
 
             if (res.value && res.value.value.toString()) {
                 console.log(res.value.value.toString('utf8'));
 
-                const Key = res.value.key;
+                const key = res.value.key;
                 let Record;
                 try {
                     Record = JSON.parse(res.value.value.toString('utf8'));
@@ -83,9 +82,9 @@ class FabCar extends Contract {
                     Record = res.value.value.toString('utf8');
                 }
 
-                allResults.push({ Key, Record });
-                allKeys.push(Key);
+                allResults.push({ key, Record });
             }
+
             if (res.done) {
                 console.log('end of data');
                 await iterator.close();
