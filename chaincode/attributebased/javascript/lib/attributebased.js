@@ -6,6 +6,7 @@
 
 const { Contract } = require('fabric-contract-api');
 
+
 class AttributeBased extends Contract {
     // Initialize ledger
     async initLedger(ctx) {
@@ -17,7 +18,7 @@ class AttributeBased extends Contract {
     //Store subject attributes on the legder
     async recordAttribute(ctx, attributeKey, attribute) {
        
-        const iterator = await ctx.stub.getStateByRange("","");
+      const iterator = await ctx.stub.getStateByRange("","");
       const allKeys=[];
         while (true) {
             const res = await iterator.next();
@@ -43,16 +44,52 @@ class AttributeBased extends Contract {
        return "successfully submitted!";
     }
 
+    
 
-    //Update and existing attribute
-    async UpdateAttribute(ctx, attributeKey, newAttributevalue){
+    //Update the existing attribute
+    async updateAttribute(ctx, attributeKey, newAttribute){
         console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(attributeKey, JSON.stringify(attribute));
+        await ctx.stub.putState(attributeKey, JSON.stringify(newAttribute));
         return "successfully submitted!";
     }
 
-    //Query specific subject attribute based on subjectKey
-    async QueryUserAttribute(ctx, key) {
+    //Record policy
+    async recordPolicy(ctx, policyKey, policy) {
+       
+        const iterator = await ctx.stub.getStateByRange("","");
+        const allKeys=[];
+          while (true) {
+              const res = await iterator.next();
+  
+              if (res.value && res.value.value.toString()) {
+                  const Key = res.value.key;
+                  allKeys.push(Key);
+              }
+              if (res.done) {
+                  console.log('end of data');
+                  await iterator.close();
+                  break;
+              }
+          }
+  
+          allKeys.forEach(element=> {if (element==policyKey)
+          {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
+          }
+    });
+  
+         console.info('============= START : Record attribute ===========');
+         await ctx.stub.putState(policyKey, JSON.stringify(policy));
+         return "successfully submitted!";
+      }
+    
+      async updatePolicy(ctx, policyKey, newPolicy) {
+        console.info('============= START : Record attribute ===========');
+        await ctx.stub.putState(policyKey, JSON.stringify(newPolicy));
+        return "successfully submitted!";
+    }
+
+    //Query specific subject's attribute based on subjectKey
+    async queryUserAttribute(ctx, key) {
        
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length ===0){
@@ -61,8 +98,19 @@ class AttributeBased extends Contract {
         var attribute = JSON.parse(attributeBytes);
         console.info ('this is attributeBytes:', attributeBytes);
         console.info('this is my attribute');
-        return attribute;
+        return attribute;  
+    }
+
+    async queryPolicies(ctx, key) {
        
+        let policyBytes = await ctx.stub.getState(key);
+        if (!policyBytes || policyBytes.length ===0){
+            throw new Error(`${key} does not exist`);
+        }
+        var policy = JSON.parse(policyBytes);
+        console.info ('this is attributeBytes:', policyBytes);
+        console.info('this is my attribute');
+        return policy;  
     }
 
     //Query all data
@@ -98,7 +146,6 @@ class AttributeBased extends Contract {
         }  
     }
     
-
 }
 
 module.exports = AttributeBased;

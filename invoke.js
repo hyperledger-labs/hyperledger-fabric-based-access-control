@@ -37,18 +37,7 @@ async function main() {
 
         // Get the contract from the network.
         const contract = network.getContract('fabcar');
-       /* 
-       let subject2={
-            user:{
-            userKey:"1234ab",
-            active: true,
-            dob:'1989-06-06',
-            banCount:1,
-            group:12,
-            department: 'computer'
-            }
-        };
-            */
+       
            // Ask for attribute key and attribute values in json format
            //I should check stored attribute keys to make sure that presented key is not already used
             var attributeKey = readline.question("What is attribute key?");
