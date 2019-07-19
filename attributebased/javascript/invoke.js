@@ -37,14 +37,38 @@ async function main() {
 
         // Get the contract from the network.
         const contract = network.getContract('attributebased');
-       
-        
-           // Ask for attribute key and attribute values in json format
-            var attributeKey = readline.question("What is attribute key?");
-            var attribute = readline.question("What is user attribute in json fromat?");
-        // Store attribute on the ledger
-        const result= await contract.submitTransaction('recordAttribute', attributeKey ,JSON.stringify(attribute));
-        console.log(`Transaction has been submitted, result is: ${result.toString()}`);
+        let sara={
+            user:{
+                active: true,
+                dob:'1989-06-06',
+                banCount:1,
+                group:12,
+                department: 'computer'
+            }
+        };
+        let john = {
+            user: {
+                active: true,
+                dob: '2006-05-12', // too young
+                banCount: 4, // banned too many times
+                group: 12
+            }
+        };
+        let resource = {
+            group: {
+                id: 12
+            }
+        };
+      // Ask for subject key and subject values in json format
+     //var policyKey = readline.question("What is policy key?");
+    // var policy = readline.question("What is policy in json fromat?");
+      // Store subject on the ledger
+      //const result= await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
+     // const result= await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
+   //  const result= await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
+
+    const result= await contract.submitTransaction('PDP', 'sara', 'resource1', "can-be-admin-of-group", 'policy1' );
+       console.log(`Transaction has been submitted, result is: ${result.toString()}`);
 
        // console.log(result);
 

@@ -39,12 +39,24 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('attributebased');
 
-        // Ask for the attribute key and query based on requested key
+        //Ask for the attribute key and query based on requested key
         //var attributeKey = readline.question("What is the key you want to query?");
-       // const result = await contract.evaluateTransaction('QueryUserAttribute', attributeKey);
-       const result = await contract.evaluateTransaction('queryAll');
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-        console.log(result[0].toString);
+       //const result = await contract.evaluateTransaction('QueryUserAttribute', attributeKey);
+      // const result = await contract.evaluateTransaction('queryAll');
+        const result = await contract.evaluateTransaction('queryPolicies', 'policy1');
+
+        console.log(`Transaction has been evaluated, result is: ${result.toString()}`); 
+        
+        var resultj= JSON.parse (result.toString());
+        while (typeof resultj== 'string')
+        {
+         resultj=JSON.parse(resultj);
+        }
+        console.log(resultj);
+        console.log(typeof resultj);
+     //  console.log(JSON.parse(JSON.parse(JSON.parse(result.toString()))));
+     //  let temp= JSON.parse(JSON.parse(JSON.parse(result.toString())));
+        
 
     } catch (error) {
         console.log("----->error\n");
