@@ -60,14 +60,14 @@ async function main() {
             }
         };
       // Ask for subject key and subject values in json format
-     //var policyKey = readline.question("What is policy key?");
-    // var policy = readline.question("What is policy in json fromat?");
+    //var policyKey = readline.question("What is policy key?");
+   // var policy = readline.question("What is policy in json fromat?");
       // Store subject on the ledger
-      //const result= await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
-     // const result= await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
-   //  const result= await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
+  // const result= await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
+   // const result= await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
+    // const result= await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
 
-    const result= await contract.submitTransaction('PDP', 'sara', 'resource1', "can-be-admin-of-group", 'policy1' );
+   const result= await contract.submitTransaction('PDP', 'sara', 'resource1', "can-be-admin-of-group", 'policy1' );
        console.log(`Transaction has been submitted, result is: ${result.toString()}`);
 
        // console.log(result);
