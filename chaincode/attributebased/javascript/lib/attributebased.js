@@ -11,16 +11,16 @@ const NodeAbac = require('node-abac');
 class AttributeBased extends Contract {
     // Initialize ledger
     async initLedger(ctx) {
-        console.info('============= START : Initialize Ledger ===========');    
+        console.info('============= START : Initialize Ledger ===========');
 
-        
+
         console.info('============= END : Initialize Ledger ===========');
     }
     //Store subject attributes on the legder
     async recordSubject(ctx, subjectKey, subject) {
-       
-      const iterator = await ctx.stub.getStateByRange("","");
-      const allKeys=[];
+
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
@@ -35,159 +35,157 @@ class AttributeBased extends Contract {
             }
         }
 
-        allKeys.forEach(element=> {if (element==subjectKey)
+        allKeys.forEach(element=> {if (element == subjectKey)
         {throw new Error(`${subjectKey} is already exist you can update subject attribute using UpdateSubject function`);
         }
         });
 
         console.info('============= START : Record subjects attribute ===========');
-       await ctx.stub.putState(subjectKey, JSON.stringify(subject));
-       return "successfully submitted!";
+        await ctx.stub.putState(subjectKey, JSON.stringify(subject));
+        return 'successfully submitted!';
     }
 
     //Update the existing subject attributes
     async updateSubject(ctx, subjectKey, newSubject){
         console.info('============= START : Record subject attribute ===========');
         await ctx.stub.putState(subjectKey, JSON.stringify(newSubject));
-        return "successfully submitted!";
+        return 'successfully submitted!';
     }
 
     //Record policy
     async recordPolicy(ctx, policyKey, policy) {
-       
-        const iterator = await ctx.stub.getStateByRange("","");
-        const allKeys=[];
-          while (true) {
-              const res = await iterator.next();
-  
-              if (res.value && res.value.value.toString()) {
-                  const Key = res.value.key;
-                  allKeys.push(Key);
-              }
-              if (res.done) {
-                  console.log('end of data');
-                  await iterator.close();
-                  break;
-              }
-          }
-  
-          allKeys.forEach(element=> {if (element==policyKey)
-          {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
-          }
-    });
-  
-         console.info('============= START : Record attribute ===========');
-         await ctx.stub.putState(policyKey, JSON.stringify(policy));
-         return "successfully submitted!";
-      }
 
-    //Update existing policy 
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys = [];
+        while (true) {
+            const res = await iterator.next();
+
+            if (res.value && res.value.value.toString()) {
+                const Key = res.value.key;
+                allKeys.push(Key);
+            }
+            if (res.done) {
+                console.log('end of data');
+                await iterator.close();
+                break;
+            }
+        }
+
+        allKeys.forEach(element=> {if (element == policyKey)
+        {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+
+        console.info('============= START : Record attribute ===========');
+        await ctx.stub.putState(policyKey, JSON.stringify(policy));
+        return 'successfully submitted!';
+    }
+
+    //Update existing policy
     async updatePolicy(ctx, policyKey, newPolicy) {
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(policyKey, JSON.stringify(newPolicy));
-        return "successfully submitted!";
+        return 'successfully submitted!';
     }
     // Record resourses attributes
     async recordResource(ctx, resourceKey, resource) {
-       
-        const iterator = await ctx.stub.getStateByRange("","");
-        const allKeys=[];
-          while (true) {
-              const res = await iterator.next();
-  
-              if (res.value && res.value.value.toString()) {
-                  const Key = res.value.key;
-                  allKeys.push(Key);
-              }
-              if (res.done) {
-                  console.log('end of data');
-                  await iterator.close();
-                  break;
-              }
-          }
-  
-          allKeys.forEach(element=> {if (element==resourceKey)
-          {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
-          }
-    });
-  
-         console.info('============= START : Record attribute ===========');
-         await ctx.stub.putState(resourceKey, JSON.stringify(resource));
-         return "successfully submitted!";
+
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys = [];
+        while (true) {
+            const res = await iterator.next();
+
+            if (res.value && res.value.value.toString()) {
+                const Key = res.value.key;
+                allKeys.push(Key);
+            }
+            if (res.done) {
+                console.log('end of data');
+                await iterator.close();
+                break;
+            }
+        }
+
+        allKeys.forEach(element=> {if (element === resourceKey)
+        {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+
+        console.info('============= START : Record attribute ===========');
+        await ctx.stub.putState(resourceKey, JSON.stringify(resource));
+        return 'successfully submitted!';
     }
     //update existing resource attributes
-      async updateResource(ctx, resourceKey, newResource) {
+    async updateResource(ctx, resourceKey, newResource) {
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(resourceKey, JSON.stringify(newResource));
-        return "successfully submitted!";
+        return 'successfully submitted!';
     }
 
-    // Policy Decision Point (PDP) 
+    // Policy Decision Point (PDP)
     async PDP (ctx, subjectKey, resourceKey, rule, policyKey){
         let policyBytes = await ctx.stub.getState(policyKey);
-        if (!policyBytes || policyBytes.length ===0){
+        if (!policyBytes || policyBytes.length === 0){
             throw new Error(`${policyKey} does not exist`);
         }
-        var policy = policyBytes.toString();
-        var policyParsed = JSON.parse(policy);
-        while (typeof policyParsed == 'string'){
+        let policy = policyBytes.toString();
+        let policyParsed = JSON.parse(policy);
+        while (typeof policyParsed === 'string'){
             policyParsed = JSON.parse(policyParsed);
         }
         const Abac = new NodeAbac(policyParsed);
 
         let subjectBytes = await ctx.stub.getState(subjectKey);
-        if (!subjectBytes || subjectBytes.length ===0){
+        if (!subjectBytes || subjectBytes.length === 0){
             throw new Error(`${subjectKey} does not exist`);
         }
-        var subject = subjectBytes.toString();
-        var subjectParsed = JSON.parse(subject);
-        while(typeof subjectParsed == 'string'){
-            subjectParsed=JSON.parse(subjectParsed);
+        let subject = subjectBytes.toString();
+        let subjectParsed = JSON.parse(subject);
+        while(typeof subjectParsed === 'string'){
+            subjectParsed = JSON.parse(subjectParsed);
         }
         let resourceBytes = await ctx.stub.getState(resourceKey);
-        if (!resourceBytes || resourceBytes.length ===0){
+        if (!resourceBytes || resourceBytes.length === 0){
             throw new Error(`${resourceKey} does not exist`);
         }
-        var resourceParsed = JSON.parse(resourceBytes.toString());
-        while(typeof resourceParsed== 'string'){
-            resourceParsed=JSON.parse(resourceParsed);
+        let resourceParsed = JSON.parse(resourceBytes.toString());
+        while(typeof resourceParsed === 'string'){
+            resourceParsed = JSON.parse(resourceParsed);
         }
-        const permit = Abac.enforce(rule, subjectParsed, resourceParsed);
-        return permit;
-       
+        return Abac.enforce(rule, subjectParsed, resourceParsed);
     }
     //Query specific subject's attribute based on subjectKey
     async queryUserAttribute(ctx, key) {
-       
+
         let attributeBytes = await ctx.stub.getState(key);
-        if (!attributeBytes || attributeBytes.length ===0){
+        if (!attributeBytes || attributeBytes.length === 0){
             throw new Error(`${key} does not exist`);
         }
-        var attribute = JSON.parse(attributeBytes);
+        let attribute = JSON.parse(attributeBytes);
         console.info ('this is attributeBytes:', attributeBytes);
         console.info('this is my attribute');
-        return attribute;  
+        return attribute;
     }
 
     async queryPolicies(ctx, key) {
-       
+
         let policyBytes = await ctx.stub.getState(key);
-        if (!policyBytes || policyBytes.length ===0){
+        if (!policyBytes || policyBytes.length === 0){
             throw new Error(`${key} does not exist`);
         }
-        var policy = JSON.parse(policyBytes.toString());
+        let policy = JSON.parse(policyBytes.toString());
         console.info ('this is attributeBytes:', policyBytes);
         console.info('this is my attribute');
         console.log(typeof policy);
-        return policy;  
+        return policy;
     }
 
     //Query all data
     async queryAll(ctx) {
-        const iterator = await ctx.stub.getStateByRange("","");
+        const iterator = await ctx.stub.getStateByRange('','');
 
-      const allResults=[];
-      const allKeys=[];
+        const allResults = [];
+        const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
@@ -212,9 +210,9 @@ class AttributeBased extends Contract {
                 console.info(allResults);
                 return JSON.stringify(allResults);
             }
-        }  
+        }
     }
-    
+
 }
 
 module.exports = AttributeBased;

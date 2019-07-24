@@ -61,6 +61,7 @@ async function main() {
             }
         };
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Ask for subject key and subject values in json format
     //var policyKey = readline.question("What is policy key?");
    // var policy = readline.question("What is policy in json fromat?");
@@ -83,6 +84,18 @@ async function main() {
         const result = await contract.submitTransaction('PDP', 'sara', 'resource1', 'can-be-admin-of-group', 'policy1');
         console.log(`Transaction has been submitted, result is: ${result.toString()}`);
 >>>>>>> 05456c3... lint invoke.js
+=======
+        // Ask for subject key and subject values in json format
+       var policyKey = readline.question("What is policy key?");
+       var policy = readline.question("What is policy in json fromat?");
+        // Store subject on the ledger
+        //await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
+        //await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
+        await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
+
+        const result = await contract.submitTransaction('PDP', 'sara', 'resource1', 'can-be-admin-of-group', 'policy2');
+        console.log(`Transaction has been submitted, result is: ${result.toString()}`);
+>>>>>>> 7f7d7fb... lint files
 
         // console.log(result);
 

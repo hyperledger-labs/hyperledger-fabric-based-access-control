@@ -13,6 +13,7 @@ module.exports = {
     },
     extends: "eslint:recommended",
     rules: {
+        "space-infix-ops": ["error", {"int32Hint": false}],
         indent: ['error', 4],
         'linebreak-style': ['error', 'unix'],
         quotes: ['error', 'single'],
@@ -32,7 +33,6 @@ module.exports = {
         'no-with': 'error',
         'operator-linebreak': 'error',
         yoda: 'error',
-        'quote-props': ['error', 'as-needed'],
-        'no-constant-condition': ["error", { "checkLoops": false }]
+        'quote-props': ['error', 'as-needed']
     }
 };
