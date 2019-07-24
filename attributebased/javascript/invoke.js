@@ -4,7 +4,7 @@
 
 'use strict';
 
-const { FileSystemWallet, Gateway } = require('fabric-network');
+const {FileSystemWallet, Gateway} = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,6 +12,7 @@ const ccpPath = path.resolve(__dirname, '..', '..', 'basic-network', 'connection
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 const readline = require('readline-sync');
+
 async function main() {
     try {
 
@@ -30,19 +31,19 @@ async function main() {
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'user1', discovery: { enabled: false } });
+        await gateway.connect(ccp, {wallet, identity: 'user1', discovery: {enabled: false}});
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
         const contract = network.getContract('attributebased');
-        let sara={
-            user:{
+        let sara = {
+            user: {
                 active: true,
-                dob:'1989-06-06',
-                banCount:1,
-                group:12,
+                dob: '1989-06-06',
+                banCount: 1,
+                group: 12,
                 department: 'computer'
             }
         };
@@ -59,6 +60,7 @@ async function main() {
                 id: 12
             }
         };
+<<<<<<< HEAD
       // Ask for subject key and subject values in json format
     //var policyKey = readline.question("What is policy key?");
    // var policy = readline.question("What is policy in json fromat?");
@@ -69,8 +71,20 @@ async function main() {
 
    const result= await contract.submitTransaction('PDP', 'sara', 'resource1', "can-be-admin-of-group", 'policy1' );
        console.log(`Transaction has been submitted, result is: ${result.toString()}`);
+=======
+        // Ask for subject key and subject values in json format
+        //var policyKey = readline.question("What is policy key?");
+        // var policy = readline.question("What is policy in json fromat?");
+        // Store subject on the ledger
+        //const result= await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
+        // const result= await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
+        //  const result= await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
 
-       // console.log(result);
+        const result = await contract.submitTransaction('PDP', 'sara', 'resource1', 'can-be-admin-of-group', 'policy1');
+        console.log(`Transaction has been submitted, result is: ${result.toString()}`);
+>>>>>>> 05456c3... lint invoke.js
+
+        // console.log(result);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
