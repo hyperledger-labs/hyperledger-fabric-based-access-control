@@ -18,8 +18,13 @@
         "readline-sync": "^1.4.9"
     },
     "devDependencies": {
+        "@theledger/fabric-mock-stub": "^4.0.0",
         "chai": "^4.2.0",
+<<<<<<< HEAD
         "eslint": "^6.1",
+=======
+        "eslint": "^6.14.0",
+>>>>>>> f8ddfe2... init ledger
         "mocha": "^5.2.0",
         "nyc": "^13.1.0",
         "sinon": "^7.1.1",

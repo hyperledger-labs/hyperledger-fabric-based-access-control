@@ -1,0 +1,40 @@
+{
+    "attributes": {
+        "user": {
+            "active": "Active",
+            "banCount": "Times banned",
+            "dob": "Date of birth",
+            "group": "Group ID"
+        },
+        "group": {
+            "id": "Group ID"
+        }
+    },
+    "rules": {
+        "can-be-admin-of-group": {
+            "attributes": {
+                "user.active": {
+                    "comparison_type": "boolean",
+                    "comparison": "boolAnd",
+                    "value": true
+                },
+                "user.dob": {
+                    "comparison_type": "datetime",
+                    "comparison": "isLessRecentThan",
+                    "value": "-21Y"
+                },
+                "user.banCount": {
+                    "comparison_type": "numeric",
+                    "comparison": "isLesserThanEqualTo",
+                    "value": 1
+                },
+                "user.group": {
+                    "comparison_target": "group",
+                    "comparison_type": "numeric",
+                    "comparison": "isStrictlyEqual",
+                    "field": "id"
+                }
+            }
+        }
+    }
+}

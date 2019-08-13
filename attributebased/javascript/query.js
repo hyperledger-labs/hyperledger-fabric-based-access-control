@@ -43,19 +43,12 @@ async function main() {
         //var attributeKey = readline.question("What is the key you want to query?");
        //const result = await contract.evaluateTransaction('QueryUserAttribute', attributeKey);
       // const result = await contract.evaluateTransaction('queryAll');
-        const result = await contract.evaluateTransaction('queryPolicies', 'policy1');
+        const result = await contract.evaluateTransaction('queryPolicies', 'initPolicy');
 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`); 
-        
-        var resultj= JSON.parse (result.toString());
-        while (typeof resultj== 'string')
-        {
-         resultj=JSON.parse(resultj);
-        }
-        console.log(resultj);
-        console.log(typeof resultj);
-     //  console.log(JSON.parse(JSON.parse(JSON.parse(result.toString()))));
-     //  let temp= JSON.parse(JSON.parse(JSON.parse(result.toString())));
+        const result2 = await contract.evaluateTransaction('queryUserAttribute', 'initSubject');
+        console.log(`Transaction has been evaluated, result is: ${result2.toString()}`); 
+
         
 
     } catch (error) {

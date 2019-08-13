@@ -3,16 +3,31 @@
  */
 
 'use strict';
-
+//import {subjectAttribute} from './lib/data/policy.json';
 const { Contract } = require('fabric-contract-api');
 const NodeAbac = require('node-abac');
+const path = require('path');
+const fs = require('fs');
+const subjectAttribute = require('./data/subject');
+const resourceAttribute = require('./data/resource')
+//conect to policy data file
+const policyDataPath = path.join(process.cwd(), './lib/data/policy.json');
+const policyDataJson = fs.readFileSync(policyDataPath, 'utf8');
+
 
 
 class AttributeBased extends Contract {
     // Initialize ledger
     async initLedger(ctx) {
+<<<<<<< HEAD
         console.info('============= START : Initialize Ledger ===========');
 
+=======
+        console.info('============= START : Initialize Ledger ===========');    
+        await ctx.stub.putState('initPolicy', JSON.stringify(policyDataJson));
+        await ctx.stub.putState('initSubject', JSON.stringify(subjectAttribute));
+        await ctx.stub.putState('initResource', JSON.stringify(resourceAttribute));
+>>>>>>> f8ddfe2... init ledger
 
         console.info('============= END : Initialize Ledger ===========');
     }
