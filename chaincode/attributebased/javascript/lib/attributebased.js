@@ -9,7 +9,7 @@ const NodeAbac = require('node-abac');
 const path = require('path');
 const fs = require('fs');
 const subjectAttribute = require('./data/subject');
-const resourceAttribute = require('./data/resource')
+const resourceAttribute = require('./data/resource');
 //conect to policy data file
 const policyDataPath = path.join(process.cwd(), './lib/data/policy.json');
 const policyDataJson = fs.readFileSync(policyDataPath, 'utf8');
@@ -33,9 +33,14 @@ class AttributeBased extends Contract {
     }
     //Store subject attributes on the legder
     async recordSubject(ctx, subjectKey, subject) {
+<<<<<<< HEAD
 
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+>>>>>>> be638c3... eslint
         while (true) {
             const res = await iterator.next();
 
@@ -50,7 +55,11 @@ class AttributeBased extends Contract {
             }
         }
 
+<<<<<<< HEAD
         allKeys.forEach(element=> {if (element == subjectKey)
+=======
+        allKeys.forEach(element=> {if (element===subjectKey)
+>>>>>>> be638c3... eslint
         {throw new Error(`${subjectKey} is already exist you can update subject attribute using UpdateSubject function`);
         }
         });
@@ -69,12 +78,19 @@ class AttributeBased extends Contract {
 
     //Record policy
     async recordPolicy(ctx, policyKey, policy) {
+<<<<<<< HEAD
 
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+        while (true) {
+            const res = await iterator.next();
+>>>>>>> be638c3... eslint
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -85,12 +101,20 @@ class AttributeBased extends Contract {
                 break;
             }
         }
+<<<<<<< HEAD
 
         allKeys.forEach(element=> {if (element == policyKey)
         {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
         }
         });
 
+=======
+        allKeys.forEach(element=> {if (element===policyKey)
+        {
+            throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+>>>>>>> be638c3... eslint
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(policyKey, JSON.stringify(policy));
         return 'successfully submitted!';
@@ -104,12 +128,19 @@ class AttributeBased extends Contract {
     }
     // Record resourses attributes
     async recordResource(ctx, resourceKey, resource) {
+<<<<<<< HEAD
 
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+        while (true) {
+            const res = await iterator.next();
+>>>>>>> be638c3... eslint
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -120,12 +151,19 @@ class AttributeBased extends Contract {
                 break;
             }
         }
+<<<<<<< HEAD
 
         allKeys.forEach(element=> {if (element === resourceKey)
         {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
         }
         });
 
+=======
+        allKeys.forEach(element=> {if (element===resourceKey)
+        {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+>>>>>>> be638c3... eslint
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(resourceKey, JSON.stringify(resource));
         return 'successfully submitted!';
@@ -156,14 +194,20 @@ class AttributeBased extends Contract {
         }
         let subject = subjectBytes.toString();
         let subjectParsed = JSON.parse(subject);
+<<<<<<< HEAD
         while(typeof subjectParsed === 'string'){
             subjectParsed = JSON.parse(subjectParsed);
+=======
+        while(typeof subjectParsed == 'string'){
+            subjectParsed=JSON.parse(subjectParsed);
+>>>>>>> be638c3... eslint
         }
         let resourceBytes = await ctx.stub.getState(resourceKey);
         if (!resourceBytes || resourceBytes.length === 0){
             throw new Error(`${resourceKey} does not exist`);
         }
         let resourceParsed = JSON.parse(resourceBytes.toString());
+<<<<<<< HEAD
         while(typeof resourceParsed === 'string'){
             resourceParsed = JSON.parse(resourceParsed);
         }
@@ -172,6 +216,16 @@ class AttributeBased extends Contract {
     //Query specific subject's attribute based on subjectKey
     async queryUserAttribute(ctx, key) {
 
+=======
+        while(typeof resourceParsed== 'string'){
+            resourceParsed=JSON.parse(resourceParsed);
+        }
+        const permit = Abac.enforce(rule, subjectParsed, resourceParsed);
+        return permit;
+    }
+    //Query specific subject's attribute based on subjectKey
+    async queryUserAttribute(ctx, key) {
+>>>>>>> be638c3... eslint
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -183,7 +237,10 @@ class AttributeBased extends Contract {
     }
 
     async queryPolicies(ctx, key) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> be638c3... eslint
         let policyBytes = await ctx.stub.getState(key);
         if (!policyBytes || policyBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -199,8 +256,13 @@ class AttributeBased extends Contract {
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange('','');
 
+<<<<<<< HEAD
         const allResults = [];
         const allKeys = [];
+=======
+        const allResults=[];
+        const allKeys=[];
+>>>>>>> be638c3... eslint
         while (true) {
             const res = await iterator.next();
 
@@ -227,7 +289,10 @@ class AttributeBased extends Contract {
             }
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> be638c3... eslint
 }
 
 module.exports = AttributeBased;

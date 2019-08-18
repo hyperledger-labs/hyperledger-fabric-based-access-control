@@ -21,10 +21,14 @@
         "@theledger/fabric-mock-stub": "^4.0.0",
         "chai": "^4.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "eslint": "^6.1",
 =======
         "eslint": "^6.14.0",
 >>>>>>> f8ddfe2... init ledger
+=======
+        "eslint": "^4.19.1",
+>>>>>>> be638c3... eslint
         "mocha": "^5.2.0",
         "nyc": "^13.1.0",
         "sinon": "^7.1.1",
