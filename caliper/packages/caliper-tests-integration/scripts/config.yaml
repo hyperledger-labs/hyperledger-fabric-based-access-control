@@ -1,0 +1,55 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#
+# This is the default config file. It allows all users to do anything,
+# so don't use it on production systems.
+#
+# Look here for more config file examples:
+# https://github.com/verdaccio/verdaccio/tree/master/conf
+#
+# path to a directory with all packages
+storage: ./storage
+max_body_size: 99999mb
+auth:
+  htpasswd:
+    file: ./htpasswd
+    # Maximum amount of users allowed to register, defaults to "+inf".
+    # You can set this to -1 to disable registration.
+    #max_users: 1000
+# a list of other known repositories we can talk to
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    max_fails: 1000
+packages:
+  '@*/*':
+    # scoped packages
+    access: $all
+    publish: $all
+    proxy: npmjs
+  '**':
+    # allow all users (including non-authenticated users) to read and
+    # publish all packages
+    access: $all
+    # allow all known users to publish packages
+    publish: $all
+    # if package is not available locally, proxy requests to 'npmjs' registry
+    proxy: npmjs
+# log settings
+logs:
+  - {type: stdout, format: pretty, level: http}
+  #- {type: file, path: verdaccio.log, level: info}
+listen:
+ - localhost:4873            # default value
