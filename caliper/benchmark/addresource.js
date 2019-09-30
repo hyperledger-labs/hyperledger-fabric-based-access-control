@@ -27,20 +27,20 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-   txIndex++;
-   let resourceKey =  'resource_' + txIndex.toString();
-   let resource = {
+    txIndex++;
+    let resourceKey =  'resource_' + txIndex.toString();
+    let resource = {
         group: {
             id: 12
         }
     };
-        let args;
+    let args;
     if (bc.bcType === 'fabric') {
         args = {
             chaincodeFunction: 'recordResource',
             chaincodeArguments: [resourceKey, JSON.stringify(resource)],
         };
-    } 
+    }
     return bc.invokeSmartContract(contx, 'simple', 'v0', args, 30);
 };
 

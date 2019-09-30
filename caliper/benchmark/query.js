@@ -35,7 +35,7 @@ module.exports.run = function() {
             chaincodeFunction: 'getPolicy',
             chaincodeArguments: [policyKey]
         };
-    } 
+    }
 
     // TODO: until Fabric query is implemented, use invoke
     return bc.invokeSmartContract(contx, 'simple', 'v0', args, 30);

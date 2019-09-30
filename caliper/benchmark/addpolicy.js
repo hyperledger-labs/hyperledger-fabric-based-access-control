@@ -28,18 +28,18 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-   txIndex++;
-   let policyKey =  'policy_' + txIndex.toString() ;
-   console.log(policyKey);
-   let policy = {"attributes":{"user":{"active":"Active","banCount":"Timesbanned","dob":"Dateofbirth","group":"GroupID"},"group":{"id":"GroupID"}},"rules":{"can-be-admin-of-group":{"attributes":{"user.active":{"comparison_type":"boolean","comparison":"boolAnd","value":true},"user.dob":{"comparison_type":"datetime","comparison":"isLessRecentThan","value":"-21Y"},"user.banCount":{"comparison_type":"numeric","comparison":"isLesserThanEqualTo","value":1},"user.group":{"comparison_target":"group","comparison_type":"numeric","comparison":"isStrictlyEqual","field":"id"}}}}};
-  
-        let args;
+    txIndex++;
+    let policyKey =  'policy_' + txIndex.toString() ;
+    console.log(policyKey);
+    //policy should be in JSON format
+    let policy = {"attributes":{"user":{"active":"Active","banCount":"Timesbanned","dob":"Dateofbirth","group":"GroupID"},"group":{"id":"GroupID"}},"rules":{"can-be-admin-of-group":{"attributes":{"user.active":{"comparison_type":"boolean","comparison":"boolAnd","value":true},"user.dob":{"comparison_type":"datetime","comparison":"isLessRecentThan","value":"-21Y"},"user.banCount":{"comparison_type":"numeric","comparison":"isLesserThanEqualTo","value":1},"user.group":{"comparison_target":"group","comparison_type":"numeric","comparison":"isStrictlyEqual","field":"id"}}}}};
+    let args;
     if (bc.bcType === 'fabric') {
         args = {
             chaincodeFunction: 'recordPolicy',
             chaincodeArguments: [policyKey, JSON.stringify(policy)],
         };
-    } 
+    }
     return bc.invokeSmartContract(contx, 'simple', 'v0', args, 30);
 };
 

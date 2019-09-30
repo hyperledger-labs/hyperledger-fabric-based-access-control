@@ -13,7 +13,7 @@
 */
 
 'use strict';
- 
+
 module.exports.info  = 'Query the decision.';
 
 let txIndex=0;
@@ -28,18 +28,18 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-   txIndex= Math.floor(Math.random() * 100);
-   let subjectKey= 'subject_' + txIndex.toString();
-   let resourceKey =  'resource_' + txIndex.toString();
-   let policyKey =  'policy_' + txIndex.toString();
-   let rule = 'can-be-admin-of-group';
-        let args;
+    txIndex= Math.floor(Math.random() * 100);
+    let subjectKey= 'subject_' + txIndex.toString();
+    let resourceKey =  'resource_' + txIndex.toString();
+    let policyKey =  'policy_' + txIndex.toString();
+    let rule = 'can-be-admin-of-group';
+    let args;
     if (bc.bcType === 'fabric') {
         args = {
             chaincodeFunction: 'pdp',
             chaincodeArguments: [subjectKey, resourceKey, rule, policyKey],
         };
-    } 
+    }
     return bc.invokeSmartContract(contx, 'simple', 'v0', args, 30);
 };
 

@@ -1,7 +1,6 @@
 const shim = require('fabric-shim');
 const util = require('util');
 const NodeAbac = require('node-abac');
-
 var Chaincode = class {
     /**
      * Called during chaincode instantiate and upgrade. This method can be used

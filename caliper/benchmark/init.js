@@ -28,28 +28,23 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-   txIndex++;
-   let attributekey =  txIndex.toString() ;
-   let john = {
-    user: {
-        active: true,
-        dob: '2006-05-12', // too young
-        banCount: 4, // banned too many times
-        group: 12
-    }
-};
-let resource = {
-    group: {
-        id: 12
-    }
-};
+    txIndex++;
+    let attributekey =  txIndex.toString() ;
+    let john = {
+        user: {
+            active: true,
+            dob: '2006-05-12', // too young
+            banCount: 4, // banned too many times
+            group: 12
+        }
+    };
     let args;
     if (bc.bcType === 'fabric') {
         args = {
             chaincodeFunction: 'recordSubject',
             chaincodeArguments: [attributekey, john.toString()],
         };
-    } 
+    }
     return bc.invokeSmartContract(contx, 'simple', 'v0', args, 30);
 };
 
