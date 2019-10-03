@@ -89,6 +89,16 @@ async function main() {
 >>>>>>> 05456c3... lint invoke.js
 =======
         // Ask for subject key and subject values in json format
+<<<<<<< HEAD
+        //var policyKey = readline.question("What is policy key?");
+        // var policy = readline.question("What is policy in json fromat?");
+        // Store subject on the ledger
+        //const result= await contract.submitTransaction('recordSubject', 'sara' , JSON.stringify(sara));
+        //const result= await contract.submitTransaction('recordResource', 'resource1' , JSON.stringify(resource));
+        // const result= await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
+
+        const result= await contract.submitTransaction('PDP', 'initSubject', 'initResource', 'can-be-admin-of-group', 'initPolicy' );
+=======
        const policyKey = readline.question("What is policy key?");
        const policy = readline.question("What is policy in json fromat?");
         // Store subject on the ledger
@@ -97,6 +107,7 @@ async function main() {
         //await contract.submitTransaction('recordPolicy', policyKey , JSON.stringify(policy));
 
         const result = await contract.submitTransaction('PDP', 'sara', 'resource', 'can-be-admin-of-group', 'policy1');
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
         console.log(`Transaction has been submitted, result is: ${result.toString()}`);
 >>>>>>> 7f7d7fb... lint files
 =======

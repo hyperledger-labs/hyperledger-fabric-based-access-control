@@ -20,7 +20,13 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         console.info('============= START : Initialize Ledger ===========');
+<<<<<<< HEAD
+        await ctx.stub.putState('initPolicy', JSON.stringify(policyDataJson));
+        await ctx.stub.putState('initSubject', JSON.stringify(subjectAttribute));
+        await ctx.stub.putState('initResource', JSON.stringify(resourceAttribute));
+=======
 
+<<<<<<< HEAD
 =======
         console.info('============= START : Initialize Ledger ===========');    
 =======
@@ -30,12 +36,16 @@ class AttributeBased extends Contract {
         await ctx.stub.putState('initSubject', JSON.stringify(subjectAttribute));
         await ctx.stub.putState('initResource', JSON.stringify(resourceAttribute));
 >>>>>>> f8ddfe2... init ledger
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
 
         console.info('============= END : Initialize Ledger ===========');
     }
 
     //Store subject attributes on the legder
     async recordSubject(ctx, subjectKey, subject) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         const iterator = await ctx.stub.getStateByRange('','');
@@ -44,6 +54,15 @@ class AttributeBased extends Contract {
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys=[];
 >>>>>>> be638c3... eslint
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+=======
+
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys = [];
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         while (true) {
             const res = await iterator.next();
             if (res.value && res.value.value.toString()) {
@@ -57,6 +76,23 @@ class AttributeBased extends Contract {
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        allKeys.forEach(element=> {if (element===subjectKey)
+        {
+            throw new Error(`${subjectKey} is already exist you can update subject attribute using UpdateSubject function`);
+        }
+        });
+        try{
+            console.info('============= START : Record subjects attribute ===========');
+            await ctx.stub.putState(subjectKey, JSON.stringify(subject));
+            return `Transaction successfully submitted! The ${subjectKey} attributes are recorded on the ledger`;
+        }
+        catch(err){
+            console.error(err);
+        }
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
 <<<<<<< HEAD
         allKeys.forEach(element=> {if (element == subjectKey)
@@ -71,6 +107,7 @@ class AttributeBased extends Contract {
 >>>>>>> 413ff49... Add web application
         }
         });
+<<<<<<< HEAD
         try{
             console.info('============= START : Record subjects attribute ===========');
             await ctx.stub.putState(subjectKey, JSON.stringify(subject));
@@ -79,10 +116,21 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+=======
+
+        console.info('============= START : Record subjects attribute ===========');
+        await ctx.stub.putState(subjectKey, JSON.stringify(subject));
+        return 'successfully submitted!';
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     //Update the existing resource attributes
     async updateSubject(ctx, subjectKey, newSubject){
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 13b1e4c... merge pull requests
         try{
             console.info('============= START : Record subject attribute ===========');
             await ctx.stub.putState(subjectKey, JSON.stringify(newSubject));
@@ -91,23 +139,43 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+<<<<<<< HEAD
+=======
+=======
+        console.info('============= START : Record subject attribute ===========');
+        await ctx.stub.putState(subjectKey, JSON.stringify(newSubject));
+        return 'successfully submitted!';
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     //Record policy
     async recordPolicy(ctx, policyKey, policy) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+        while (true) {
+            const res = await iterator.next();
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
+<<<<<<< HEAD
 =======
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys=[];
         while (true) {
             const res = await iterator.next();
 >>>>>>> be638c3... eslint
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -119,6 +187,22 @@ class AttributeBased extends Contract {
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        allKeys.forEach(element=> {if (element===policyKey)
+        {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+        try{
+            console.info('============= START : Record attribute ===========');
+            await ctx.stub.putState(policyKey, JSON.stringify(policy));
+            return `Transaction successfully submitted! The ${policyKey} is recorded on the ledger`;
+        }
+        catch(err){
+            console.error(err);
+        }
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
         allKeys.forEach(element=> {if (element == policyKey)
         {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
@@ -135,6 +219,7 @@ class AttributeBased extends Contract {
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(policyKey, JSON.stringify(policy));
         return 'successfully submitted!';
+<<<<<<< HEAD
 =======
         try{
             console.info('============= START : Record attribute ===========');
@@ -145,10 +230,17 @@ class AttributeBased extends Contract {
             console.error(err);
         }
 >>>>>>> 413ff49... Add web application
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     //Update existing policy
     async updatePolicy(ctx, policyKey, newPolicy) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 13b1e4c... merge pull requests
         try{
             console.info('============= START : Record attribute ===========');
             await ctx.stub.putState(policyKey, JSON.stringify(newPolicy));
@@ -157,23 +249,43 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+<<<<<<< HEAD
+=======
+=======
+        console.info('============= START : Record attribute ===========');
+        await ctx.stub.putState(policyKey, JSON.stringify(newPolicy));
+        return 'successfully submitted!';
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     // Record resourses attributes
     async recordResource(ctx, resourceKey, resource) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys=[];
+        while (true) {
+            const res = await iterator.next();
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
 
+<<<<<<< HEAD
 =======
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys=[];
         while (true) {
             const res = await iterator.next();
 >>>>>>> be638c3... eslint
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -185,6 +297,22 @@ class AttributeBased extends Contract {
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        allKeys.forEach(element=> {if (element===resourceKey)
+        {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
+        }
+        });
+        try{
+            console.info('============= START : Record attribute ===========');
+            await ctx.stub.putState(resourceKey, JSON.stringify(resource));
+            return `Transaction successfully submitted! The ${resourceKey} attributes are recorded on the ledger`;
+        }
+        catch(err){
+            console.error(err);
+        }
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
         allKeys.forEach(element=> {if (element === resourceKey)
         {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
@@ -201,6 +329,7 @@ class AttributeBased extends Contract {
         console.info('============= START : Record attribute ===========');
         await ctx.stub.putState(resourceKey, JSON.stringify(resource));
         return 'successfully submitted!';
+<<<<<<< HEAD
 =======
         try{
             console.info('============= START : Record attribute ===========');
@@ -211,10 +340,17 @@ class AttributeBased extends Contract {
             console.error(err);
         }
 >>>>>>> 413ff49... Add web application
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     //update existing resource attributes
     async updateResource(ctx, resourceKey, newResource) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 13b1e4c... merge pull requests
         try{
             console.info('============= START : Record attribute ===========');
             await ctx.stub.putState(resourceKey, JSON.stringify(newResource));
@@ -223,6 +359,14 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+<<<<<<< HEAD
+=======
+=======
+        console.info('============= START : Record attribute ===========');
+        await ctx.stub.putState(resourceKey, JSON.stringify(newResource));
+        return 'successfully submitted!';
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
     }
 
     // Policy Decision Point (PDP)
@@ -232,9 +376,19 @@ class AttributeBased extends Contract {
             throw new Error(`${policyKey} does not exist`);
         }
         let policy = policyBytes.toString();
+<<<<<<< HEAD
         console.log(policy);
         let policyParsed = JSON.parse(policy);
         console.log(policyParsed);
+=======
+<<<<<<< HEAD
+        console.log(policy);
+        let policyParsed = JSON.parse(policy);
+        console.log(policyParsed);
+=======
+        let policyParsed = JSON.parse(policy);
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         while (typeof policyParsed === 'string'){
             policyParsed = JSON.parse(policyParsed);
         }
@@ -248,7 +402,11 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         while(typeof subjectParsed === 'string'){
+<<<<<<< HEAD
+            subjectParsed=JSON.parse(subjectParsed);
+=======
             subjectParsed = JSON.parse(subjectParsed);
+<<<<<<< HEAD
 =======
         while(typeof subjectParsed == 'string'){
 =======
@@ -256,6 +414,9 @@ class AttributeBased extends Contract {
 >>>>>>> 413ff49... Add web application
             subjectParsed=JSON.parse(subjectParsed);
 >>>>>>> be638c3... eslint
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         }
         let resourceBytes = await ctx.stub.getState(resourceKey);
         if (!resourceBytes || resourceBytes.length === 0){
@@ -265,6 +426,16 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         while(typeof resourceParsed === 'string'){
+<<<<<<< HEAD
+            resourceParsed=JSON.parse(resourceParsed);
+        }
+        const permit = Abac.enforce(rule, subjectParsed, resourceParsed);
+        return `The result of access permission is ====> ${permit}`;
+    }
+
+    //Query subject or resource attributes based on their keys
+    async queryAttribute(ctx, key) {
+=======
             resourceParsed = JSON.parse(resourceParsed);
         }
         return Abac.enforce(rule, subjectParsed, resourceParsed);
@@ -272,6 +443,7 @@ class AttributeBased extends Contract {
     //Query specific subject's attribute based on subjectKey
     async queryUserAttribute(ctx, key) {
 
+<<<<<<< HEAD
 =======
         while(typeof resourceParsed== 'string'){
 =======
@@ -291,6 +463,9 @@ class AttributeBased extends Contract {
     //Query subject or resource attributes based on their keys
     async queryAttribute(ctx, key) {
 >>>>>>> 413ff49... Add web application
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -304,9 +479,15 @@ class AttributeBased extends Contract {
     // Query recorded policy
     async queryPolicies(ctx, key) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> be638c3... eslint
+=======
+=======
+
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         let policyBytes = await ctx.stub.getState(key);
         if (!policyBytes || policyBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -322,16 +503,26 @@ class AttributeBased extends Contract {
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange('','');
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        const allResults=[];
+        const allKeys=[];
+=======
+>>>>>>> 13b1e4c... merge pull requests
 
 <<<<<<< HEAD
         const allResults = [];
         const allKeys = [];
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 413ff49... Add web application
         const allResults=[];
         const allKeys=[];
 >>>>>>> be638c3... eslint
+=======
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
         while (true) {
             const res = await iterator.next();
             if (res.value && res.value.value.toString()) {
@@ -357,9 +548,15 @@ class AttributeBased extends Contract {
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> be638c3... eslint
+=======
+=======
+
+>>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
+>>>>>>> 13b1e4c... merge pull requests
 }
 
 module.exports = AttributeBased;
