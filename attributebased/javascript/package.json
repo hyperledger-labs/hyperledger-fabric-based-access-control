@@ -25,6 +25,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         "eslint": "^6.1",
 =======
         "eslint": "^6.14.0",
@@ -41,6 +42,9 @@
         "eslint": "^6.1",
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+        "eslint": "^6.4.0",
+>>>>>>> 575eb43... resolved conflicts
         "mocha": "^5.2.0",
         "nyc": "^13.1.0",
         "sinon": "^7.1.1",

@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /*
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -20,10 +21,10 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         console.info('============= START : Initialize Ledger ===========');
-<<<<<<< HEAD
         await ctx.stub.putState('initPolicy', JSON.stringify(policyDataJson));
         await ctx.stub.putState('initSubject', JSON.stringify(subjectAttribute));
         await ctx.stub.putState('initResource', JSON.stringify(resourceAttribute));
+<<<<<<< HEAD
 =======
 
 <<<<<<< HEAD
@@ -40,11 +41,14 @@ class AttributeBased extends Contract {
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
 
+=======
+>>>>>>> 575eb43... resolved conflicts
         console.info('============= END : Initialize Ledger ===========');
     }
 
     //Store subject attributes on the legder
     async recordSubject(ctx, subjectKey, subject) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -63,6 +67,10 @@ class AttributeBased extends Contract {
         const allKeys = [];
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+        const iterator = await ctx.stub.getStateByRange('','');
+        const allKeys = [];
+>>>>>>> 575eb43... resolved conflicts
         while (true) {
             const res = await iterator.next();
             if (res.value && res.value.value.toString()) {
@@ -77,8 +85,12 @@ class AttributeBased extends Contract {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         allKeys.forEach(element=> {if (element===subjectKey)
+=======
+        allKeys.forEach(element=> {if (element === subjectKey)
+>>>>>>> 575eb43... resolved conflicts
         {
             throw new Error(`${subjectKey} is already exist you can update subject attribute using UpdateSubject function`);
         }
@@ -91,6 +103,7 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 13b1e4c... merge pull requests
 
@@ -123,14 +136,19 @@ class AttributeBased extends Contract {
         return 'successfully submitted!';
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     //Update the existing resource attributes
     async updateSubject(ctx, subjectKey, newSubject){
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         try{
             console.info('============= START : Record subject attribute ===========');
             await ctx.stub.putState(subjectKey, JSON.stringify(newSubject));
@@ -140,6 +158,7 @@ class AttributeBased extends Contract {
             console.error(err);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
         console.info('============= START : Record subject attribute ===========');
@@ -147,10 +166,13 @@ class AttributeBased extends Contract {
         return 'successfully submitted!';
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     //Record policy
     async recordPolicy(ctx, policyKey, policy) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -161,10 +183,13 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> 13b1e4c... merge pull requests
 
+=======
+>>>>>>> 575eb43... resolved conflicts
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -176,6 +201,8 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -186,6 +213,7 @@ class AttributeBased extends Contract {
                 break;
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -203,8 +231,10 @@ class AttributeBased extends Contract {
         }
 =======
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
 
-        allKeys.forEach(element=> {if (element == policyKey)
+        allKeys.forEach(element=> {if (element === policyKey)
         {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
         }
         });
@@ -220,6 +250,7 @@ class AttributeBased extends Contract {
         await ctx.stub.putState(policyKey, JSON.stringify(policy));
         return 'successfully submitted!';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         try{
             console.info('============= START : Record attribute ===========');
@@ -233,14 +264,19 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     //Update existing policy
     async updatePolicy(ctx, policyKey, newPolicy) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         try{
             console.info('============= START : Record attribute ===========');
             await ctx.stub.putState(policyKey, JSON.stringify(newPolicy));
@@ -250,6 +286,7 @@ class AttributeBased extends Contract {
             console.error(err);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
         console.info('============= START : Record attribute ===========');
@@ -257,10 +294,13 @@ class AttributeBased extends Contract {
         return 'successfully submitted!';
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     // Record resourses attributes
     async recordResource(ctx, resourceKey, resource) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -271,10 +311,13 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> 13b1e4c... merge pull requests
 
+=======
+>>>>>>> 575eb43... resolved conflicts
         const iterator = await ctx.stub.getStateByRange('','');
         const allKeys = [];
         while (true) {
             const res = await iterator.next();
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -286,6 +329,8 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
             if (res.value && res.value.value.toString()) {
                 const Key = res.value.key;
                 allKeys.push(Key);
@@ -298,8 +343,12 @@ class AttributeBased extends Contract {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         allKeys.forEach(element=> {if (element===resourceKey)
+=======
+        allKeys.forEach(element=> {if (element === resourceKey)
+>>>>>>> 575eb43... resolved conflicts
         {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
         }
         });
@@ -311,6 +360,7 @@ class AttributeBased extends Contract {
         catch(err){
             console.error(err);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 13b1e4c... merge pull requests
 
@@ -343,14 +393,19 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     //update existing resource attributes
     async updateResource(ctx, resourceKey, newResource) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         try{
             console.info('============= START : Record attribute ===========');
             await ctx.stub.putState(resourceKey, JSON.stringify(newResource));
@@ -360,6 +415,7 @@ class AttributeBased extends Contract {
             console.error(err);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
         console.info('============= START : Record attribute ===========');
@@ -367,6 +423,8 @@ class AttributeBased extends Contract {
         return 'successfully submitted!';
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
     }
 
     // Policy Decision Point (PDP)
@@ -376,10 +434,10 @@ class AttributeBased extends Contract {
             throw new Error(`${policyKey} does not exist`);
         }
         let policy = policyBytes.toString();
-<<<<<<< HEAD
         console.log(policy);
         let policyParsed = JSON.parse(policy);
         console.log(policyParsed);
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         console.log(policy);
@@ -389,6 +447,8 @@ class AttributeBased extends Contract {
         let policyParsed = JSON.parse(policy);
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         while (typeof policyParsed === 'string'){
             policyParsed = JSON.parse(policyParsed);
         }
@@ -402,10 +462,8 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         while(typeof subjectParsed === 'string'){
-<<<<<<< HEAD
-            subjectParsed=JSON.parse(subjectParsed);
-=======
             subjectParsed = JSON.parse(subjectParsed);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         while(typeof subjectParsed == 'string'){
@@ -417,6 +475,8 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         }
         let resourceBytes = await ctx.stub.getState(resourceKey);
         if (!resourceBytes || resourceBytes.length === 0){
@@ -426,8 +486,7 @@ class AttributeBased extends Contract {
 <<<<<<< HEAD
 <<<<<<< HEAD
         while(typeof resourceParsed === 'string'){
-<<<<<<< HEAD
-            resourceParsed=JSON.parse(resourceParsed);
+            resourceParsed = JSON.parse(resourceParsed);
         }
         const permit = Abac.enforce(rule, subjectParsed, resourceParsed);
         return `The result of access permission is ====> ${permit}`;
@@ -435,6 +494,7 @@ class AttributeBased extends Contract {
 
     //Query subject or resource attributes based on their keys
     async queryAttribute(ctx, key) {
+<<<<<<< HEAD
 =======
             resourceParsed = JSON.parse(resourceParsed);
         }
@@ -466,6 +526,8 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         let attributeBytes = await ctx.stub.getState(key);
         if (!attributeBytes || attributeBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -480,6 +542,7 @@ class AttributeBased extends Contract {
     async queryPolicies(ctx, key) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> be638c3... eslint
@@ -488,6 +551,8 @@ class AttributeBased extends Contract {
 
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
         let policyBytes = await ctx.stub.getState(key);
         if (!policyBytes || policyBytes.length === 0){
             throw new Error(`${key} does not exist`);
@@ -502,6 +567,7 @@ class AttributeBased extends Contract {
     //Query all data
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange('','');
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -523,6 +589,10 @@ class AttributeBased extends Contract {
 =======
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+        const allResults = [];
+        const allKeys = [];
+>>>>>>> 575eb43... resolved conflicts
         while (true) {
             const res = await iterator.next();
             if (res.value && res.value.value.toString()) {
@@ -549,6 +619,7 @@ class AttributeBased extends Contract {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> be638c3... eslint
@@ -557,6 +628,8 @@ class AttributeBased extends Contract {
 
 >>>>>>> f343795218c7a1444b0be84c27a602f14a9a3ae3
 >>>>>>> 13b1e4c... merge pull requests
+=======
+>>>>>>> 575eb43... resolved conflicts
 }
 
 module.exports = AttributeBased;
