@@ -1,0 +1,46 @@
+{
+    "name": "attributebased",
+    "version": "1.0.0",
+    "description": "Attribute based access control application implemented in JavaScript",
+    "engines": {
+        "node": "^8"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "test": "nyc mocha --recursive"
+    },
+    "engineStrict": true,
+    "author": "Hyperledger",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "express": "^4.17.1",
+        "fabric-ca-client": "~1.4.0",
+        "fabric-network": "~1.4.0",
+        "readline-sync": "^1.4.9"
+    },
+    "devDependencies": {
+        "@theledger/fabric-mock-stub": "^4.0.0",
+        "chai": "^4.2.0",
+        "eslint": "^6.4.0"
+        "mocha": "^5.2.0",
+        "nyc": "^13.1.0",
+        "sinon": "^7.1.1",
+        "sinon-chai": "^3.3.0"
+    },
+    "nyc": {
+        "exclude": [
+            "coverage/**",
+            "test/**"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "all": true,
+        "check-coverage": false,
+        "statements": 30,
+        "branches": 30,
+        "functions": 30,
+        "lines": 30
+    }
+}

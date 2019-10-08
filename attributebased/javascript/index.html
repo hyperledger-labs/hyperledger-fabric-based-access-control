@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color:#85929E ;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #FCF3CF ;
+  padding: 20px;
+}
+</style>
+<body>
+
+<h2 > Record Subjects attributes</h2>
+<div style= "background-color: #A2D9CE ">
+  <form method = "POST" action="/submit-subject">
+    <label for="subjectKey">Subject key</label>
+    <input type="text" id="subjectKey" name="subjectKey" placeholder="Your subject key...">
+
+    <label for="subject">Subject attributes<label>
+    <input type="text" id="subject" name="subject" placeholder="Your subject...">
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<h2>  Record Resources attributes</h2>
+<div style= "background-color: #A2D9CE ">
+    <form method = "POST" action="/submit-resource">
+      <label for="resourceKey">Resource key</label>
+      <input type="text" id="resourceKey" name="resourceKey" placeholder="Your resource key...">
+  
+      <label for="subject">Resource attributes<label>
+      <input type="text" id="resource" name="resource" placeholder="Your resource...">
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <h2>  Record policies</h2>
+<div style="background-color: #A2D9CE">
+    <form method = "POST" action="/submit-policy">
+      <label for="policyKey">Policy key</label>
+      <input type="text" id="policyKey" name="policyKey" placeholder="Your policy key...">
+  
+      <label for="policy">Policy <label>
+      <input type="text" id="policy" name="policy" placeholder="Your policy...">
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <h2>Check access permissions</h2>
+<div style="background-color: #F5B7B1 ">
+  <form method = "POST" action="/submit-pdp">
+  <label for="subjectKey-query">Subject key</label>
+  <input type="text" id="subjectKey" name="subjectKey" placeholder="Enter subject key...">
+
+  <label for="resourceKey">Resource key</label>
+  <input type="text" id="resourceKey" name="resourceKey" placeholder="Your resource key...">
+
+  <label for="rule">Rule</label>
+  <input type="text" id="rule" name="rule" placeholder="Enter the rule...">
+
+  <label for="policy">Policy key <label>
+  <input type="text" id="policyKey" name="policyKey" placeholder="Your policy...">
+
+  <input type="submit" value="Check permission">
+  </form>
+</div>
+
+<h2>Query attributes </h2>
+<div>
+  <form method = "POST" action="/submit-queryAttribute">
+  <label for="attributeKey-query">Attribute key</label>
+  <input type="text" id="attributeKeyQuery" name="attributeKeyQuery" placeholder="Enter subject or resource key.."> 
+  <input type="submit" value="Submit Query">
+  </form>
+</div>
+
+<h2>Query policy </h2>
+<div>
+  <form method = "POST" action="/submit-queryPolicy">
+  <label for="policyKey-query">Policy key</label>
+  <input type="text" id="policyKeyQuery" name="policyKeyQuery" placeholder="Enter policy key.."> 
+  <input type="submit" value="Submit Query">
+  </form>
+</div>
+
+<h2>Query all data</h2>
+<div>
+  <form method = "POST" action="/submit-queryAll">
+  <input type="submit" value="Submit Query">
+  </form>
+</div>
+</body>
+</html>

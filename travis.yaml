@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+    - "8"
+before_install:
+    - cd attributebased
+    - cd javascript
+install:
+    - npm install
+    - npm run lint
+    - npm run test
+
+env:
+    - NODE_ENV=production PORT=8080
+
+notifications:
+  webhooks:
+    on_success: always # default: always
+    on_failure: always # default: always
+    on_start: never   # default: never
+    on_cancel: never # default: always
+    on_error: never # default: always
