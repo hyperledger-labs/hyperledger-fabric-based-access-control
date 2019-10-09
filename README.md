@@ -35,9 +35,9 @@ Make sure following tools are installed:
 7. With the enrolled admin, register another user with ``node registerUser.js``
     
     
-8. Run ``node invoke.js`` file to record a new attribute in json format on the ledger. 
-
-9. Query the ledger with ``query.js`` 
+8.Run ``node index.js`` file to run the web application. I your terminal you should see the message "app is listening on port 3000 ..."
+9. In your browser go to the address ``localhost:3000``. 
+Now you record subjects and resources attributes and policies in JSON format on the ledger. Query the stored data. And check the access permissions based on stored data and given rule.
     
 ### Shutting the network down
 
