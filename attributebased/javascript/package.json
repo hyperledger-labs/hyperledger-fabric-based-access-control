@@ -1,6 +1,6 @@
 {
     "name": "attributebased",
-    "version": "1.0.0",
+    "version": "0.1",
     "description": "Attribute based access control application implemented in JavaScript",
     "engines": {
         "node": "^8"
@@ -21,7 +21,7 @@
     "devDependencies": {
         "@theledger/fabric-mock-stub": "^4.0.0",
         "chai": "^4.2.0",
-        "eslint": "^6.4.0"
+        "eslint": "^6.4.0",
         "mocha": "^5.2.0",
         "nyc": "^13.1.0",
         "sinon": "^7.1.1",
