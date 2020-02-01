@@ -1,9 +1,6 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  */
-
-'use strict';
-
 'use strict';
 //import {subjectAttribute} from './lib/data/policy.json';
 const { Contract } = require('fabric-contract-api');
@@ -21,7 +18,7 @@ const resourceDataPath = path.join(process.cwd(), './data/policy.json');
 const resourceJSON = fs.readFileSync(resourceDataPath, 'utf8');
 
 
-class AttributeBased extends Contract {
+class abacFabric extends Contract {
     // Initialize ledger
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
@@ -170,10 +167,10 @@ class AttributeBased extends Contract {
         return Abac.enforce(rule, subjectParsed, resourceParsed);
     }
     //Query specific subject's attribute based on subjectKey
-    async static queryUserAttribute(ctx, key) {
+    async queryUserAttribute(ctx, key) {
 
         let attributeBytes = await ctx.stub.getState(key);
-        if (!attributeBytes || attributeBytes.length === 0){
+        if (!attributeBytes || attributeBytes.length === 0) {
             throw new Error(`${key} does not exist`);
         }
         let attribute = JSON.parse(attributeBytes);
@@ -182,7 +179,7 @@ class AttributeBased extends Contract {
         return attribute;
     }
 
-    async static queryPolicies(ctx, key) {
+    async queryPolicies(ctx, key) {
 
         let policyBytes = await ctx.stub.getState(key);
         if (!policyBytes || policyBytes.length === 0){
@@ -196,7 +193,7 @@ class AttributeBased extends Contract {
     }
 
     //Query all data
-    async static queryAll(ctx) {
+    async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange('','');
 
         const allResults = [];
@@ -230,4 +227,4 @@ class AttributeBased extends Contract {
 
 }
 
-module.exports = AttributeBased;
+module.exports = abacFabric;
