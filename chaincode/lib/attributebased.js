@@ -3,135 +3,97 @@
  */
 'use strict';
 //import {subjectAttribute} from './lib/data/policy.json';
-const { Contract } = require('fabric-contract-api');
+const { Contract, Context } = require('fabric-contract-api');
 const NodeAbac = require('node-abac');
 const path = require('path');
 const fs = require('fs');
 
 const policyDataPath = path.join(process.cwd(), './data/policy.json');
 const policyDataJson = fs.readFileSync(policyDataPath, 'utf8');
+const Policy = require('./Policy.js');
+const PolicyList = require('./PolicyList.js');
 
 const subjectDataPath = path.join(process.cwd(), './data/subject.json');
 const subjectAttributeJSON = fs.readFileSync(subjectDataPath, 'utf8');
+const Subject = require('./Subject.js');
+const SubjectList = require('./SubjectList.js');
 
-const resourceDataPath = path.join(process.cwd(), './data/policy.json');
+const resourceDataPath = path.join(process.cwd(), './data/resource.json');
 const resourceJSON = fs.readFileSync(resourceDataPath, 'utf8');
+const Resource = require('./Resource.js');
+const ResourceList = require('./ResourceList.js');
 
+class abacContext extends Context {
+
+    constructor() {
+        super();
+        // All Citius logs are held in a list
+        this.subjectList = new SubjectList(this);
+        this.policyList = new PolicyList(this);
+        this.resourceList = new ResourceList(this);
+    }
+}
 
 class abacFabric extends Contract {
+    constructor() {
+        // Unique namespace when multiple contracts per chaincode file
+        super('org.example.abacFabric');
+    }
+
+    createContext() {
+        return new abacContext();
+    }
+
     // Initialize ledger
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
-        await ctx.stub.putState('initPolicy', Buffer.from(policyDataJson));
-        await ctx.stub.putState('initSubject', Buffer.from(subjectAttributeJSON));
-        await ctx.stub.putState('initResource', Buffer.from(resourceJSON));
+        await this.recordPolicy(ctx,'initPolicy', policyDataJson);
+        await this.recordSubject(ctx,'initSubject', subjectAttributeJSON);
+        await this.recordResource(ctx, 'initResource', resourceJSON);
         console.info('============= END : Initialize Ledger ===========');
     }
     //Store subject attributes on the legder
     async recordSubject(ctx, subjectKey, subject) {
-
-        const iterator = await ctx.stub.getStateByRange('','');
-        const allKeys = [];
-        while (true) {
-            const res = await iterator.next();
-
-            if (res.value && res.value.value.toString()) {
-                const Key = res.value.key;
-                allKeys.push(Key);
-            }
-            if (res.done) {
-                console.log('end of data');
-                await iterator.close();
-                break;
-            }
-        }
-
-        allKeys.forEach(element => {
-            if (element === subjectKey) {
-                throw new Error(`${subjectKey} is already exist you can update subject attribute using UpdateSubject function`);
-            }
-        });
-
-        console.info('============= START : Record subjects attribute ===========');
-        await ctx.stub.putState(subjectKey, Buffer.from(JSON.stringify(subject)));
-        return 'successfully submitted!';
+        let sub = Subject.createInstance(subjectKey, subject);
+        await ctx.subjectList.addSubject(sub);
     }
 
     //Update the existing subject attributes
     async updateSubject(ctx, subjectKey, newSubject){
-        console.info('============= START : Record subject attribute ===========');
-        await ctx.stub.putState(subjectKey, Buffer.from(JSON.stringify(newSubject)));
-        return 'successfully submitted!';
+        await ctx.subjectList.updateSubject(subjectKey,newSubject);
     }
 
-    //Record policy
-    async recordPolicy(ctx, policyKey, policy) {
+    async getSubject(ctx, subjectKey)   {
+        return await ctx.subjectList.getSubject(subjectKey);
 
-        const iterator = await ctx.stub.getStateByRange('','');
-        const allKeys = [];
-        while (true) {
-            const res = await iterator.next();
-
-            if (res.value && res.value.value.toString()) {
-                const Key = res.value.key;
-                allKeys.push(Key);
-            }
-            if (res.done) {
-                console.log('end of data');
-                await iterator.close();
-                break;
-            }
-        }
-
-        allKeys.forEach(element=> {if (element === policyKey)
-        {throw new Error(`${policyKey} is already exist you can update attribute using UpdateAttribute function`);
-        }
-        });
-
-        console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(policyKey, Buffer.from(JSON.stringify(policy)));
-        return 'successfully submitted!';
+    }
+    //Store subject attributes on the legder
+    async recordPolicy(ctx, policyKey, policyData) {
+        let policy = Policy.createInstance(policyKey, policyData);
+        return await ctx.policyList.addPolicy(policy);
     }
 
-    //Update existing policy
-    async updatePolicy(ctx, policyKey, newPolicy) {
-        console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(policyKey, Buffer.from(JSON.stringify(newPolicy)));
-        return 'successfully submitted!';
+    //Update the existing subject attributes
+    async updatePolicy(ctx, policyKey, newPolicy){
+        await ctx.policyList.updatePolicy(policyKey,newPolicy);
     }
-    // Record resourses attributes
-    async recordResource(ctx, resourceKey, resource) {
 
-        const iterator = await ctx.stub.getStateByRange('','');
-        const allKeys = [];
-        while (true) {
-            const res = await iterator.next();
-
-            if (res.value && res.value.value.toString()) {
-                const Key = res.value.key;
-                allKeys.push(Key);
-            }
-            if (res.done) {
-                console.log('end of data');
-                await iterator.close();
-                break;
-            }
-        }
-
-        allKeys.forEach(element=> {if (element === resourceKey)
-        {throw new Error(`${resourceKey} is already exist you can update attribute using UpdateAttribute function`);
-        }
-        });
-
-        console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(resourceKey, Buffer.from(JSON.stringify(resource)));
-        return 'successfully submitted!';
+    async getPolicy(ctx, policyKey)   {
+        return await ctx.policyList.getPolicy(policyKey);
     }
-    //update existing resource attributes
-    async updateResource(ctx, resourceKey, newResource) {
-        console.info('============= START : Record attribute ===========');
-        await ctx.stub.putState(resourceKey, Buffer.from(JSON.stringify(newResource)));
-        return 'successfully submitted!';
+    //Store subject attributes on the legder
+    async recordResource(ctx, resourceKey, resourceData) {
+        let resource = Resource.createInstance(resourceKey, resourceData);
+        await ctx.resourceList.addResource(resource);
+    }
+
+    //Update the existing subject attributes
+    async updateResource(ctx, resourceKey, newResource){
+        await ctx.resourceList.updateResource(resourceKey,newResource);
+    }
+
+    async getResource(ctx, resourceKey)   {
+        return await ctx.resourceList.getResource(resourceKey);
     }
 
     // Policy Decision Point (PDP)
@@ -166,38 +128,37 @@ class abacFabric extends Contract {
         }
         return Abac.enforce(rule, subjectParsed, resourceParsed);
     }
-    //Query specific subject's attribute based on subjectKey
-    async queryUserAttribute(ctx, key) {
 
-        let attributeBytes = await ctx.stub.getState(key);
-        if (!attributeBytes || attributeBytes.length === 0) {
-            throw new Error(`${key} does not exist`);
+    async decide (ctx, subjectKey, resourceKey, rule, policyKey){
+        let policy = JSON.parse(await this.getPolicy(ctx,policyKey));
+        if (!policy || policy.length === 0){
+            throw new Error(`${policyKey} does not exist`);
         }
-        let attribute = JSON.parse(attributeBytes);
-        console.info ('this is attributeBytes:', attributeBytes);
-        console.info('this is my attribute');
-        return attribute;
+
+        const abacNode = new NodeAbac(policy);
+
+        let subject = JSON.parse(await this.getSubject(ctx, subjectKey));
+        if (!subject || subject.length === 0){
+            throw new Error(`${subjectKey} does not exist`);
+        }
+
+        let resource = JSON.parse(await this.getResource(ctx,resourceKey));
+        if (!resource || resource.length === 0){
+            throw new Error(`${resourceKey} does not exist`);
+        }
+
+        return abacNode.enforce(rule, subject, resource);
     }
 
-    async queryPolicies(ctx, key) {
-
-        let policyBytes = await ctx.stub.getState(key);
-        if (!policyBytes || policyBytes.length === 0){
-            throw new Error(`${key} does not exist`);
-        }
-        let policy = JSON.parse(policyBytes.toString());
-        console.info ('this is attributeBytes:', policyBytes);
-        console.info('this is my attribute');
-        console.log(typeof policy);
-        return policy;
-    }
 
     //Query all data
+    //TODO Update
     async queryAll(ctx) {
         const iterator = await ctx.stub.getStateByRange('','');
 
         const allResults = [];
-        const allKeys = [];
+        //let allKeys = [];
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             const res = await iterator.next();
 
@@ -214,7 +175,7 @@ class abacFabric extends Contract {
                 }
 
                 allResults.push({ Key, Record });
-                allKeys.push(Key);
+                //allKeys.push(Key);
             }
             if (res.done) {
                 console.log('end of data');
@@ -224,7 +185,6 @@ class abacFabric extends Contract {
             }
         }
     }
-
 }
 
 module.exports = abacFabric;
