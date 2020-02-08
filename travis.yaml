@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - "8"
 before_install:
-    - cd attributebased
+    - cd abacFabric
     - cd javascript
 install:
     - npm install
