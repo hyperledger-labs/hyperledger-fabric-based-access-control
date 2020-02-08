@@ -14,7 +14,7 @@ var Chaincode = class {
     async Init(stub) {
         let ret = stub.getFunctionAndParameters();
         console.info(ret);
-        console.info('=========== Instantiated attributebased Chaincode ===========');
+        console.info('=========== Instantiated abacFabric Chaincode ===========');
         return shim.success();
     }
 

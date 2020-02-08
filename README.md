@@ -45,3 +45,6 @@ Now you record subjects and resources attributes and policies in JSON format on 
 ### Shutting the network down
 
  1. To stop the network, run ``./stopFabric``
+
+### Test
+Tests from the older version are located in the ``test folder``
