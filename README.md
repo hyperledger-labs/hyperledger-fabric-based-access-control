@@ -6,6 +6,9 @@ Welcome to the [Hyperledger Fabric Based Access Control project](https://wiki.hy
 
 This project aims to mediate the access control flow coming from a centralized system, enhancing auditability and access control policy enforcement. It discourages illicit accesses, as the system administrators are not able to tamper the access logs (if applicable). 
 
+## Paper
+This project yielded a scientific paper, currently available at arXiv: https://arxiv.org/pdf/2006.04384.pdf
+
 ### Pre-requisites
 Make sure following tools are installed:
 
